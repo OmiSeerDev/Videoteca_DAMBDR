@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Videoteca">
+  <grid id="27dc6" binding="Layer" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="40" y="30" width="623" height="533"/>
+    </constraints>
+    <properties>
+      <background color="-16252705"/>
+      <doubleBuffered value="false"/>
+      <focusTraversalPolicyProvider value="false"/>
+      <inheritsPopupMenu value="false"/>
+      <maximumSize width="300" height="300"/>
+      <preferredSize width="200" height="150"/>
+      <requestFocusEnabled value="true"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="b5d44" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="170" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-13631506"/>
+        </properties>
+        <border type="none" title="Menú"/>
+        <children>
+          <component id="c36c8" class="javax.swing.JButton" binding="loginButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Login"/>
+            </properties>
+          </component>
+          <component id="a52f4" class="javax.swing.JButton" binding="categoriesButton">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Categorías"/>
+            </properties>
+          </component>
+          <component id="7c18a" class="javax.swing.JButton" binding="rolesButton" default-binding="true">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Roles"/>
+            </properties>
+          </component>
+          <component id="7d816" class="javax.swing.JButton" binding="exitButton">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-393154"/>
+              <text value="Salir"/>
+            </properties>
+          </component>
+          <component id="574bf" class="javax.swing.JButton" binding="videosButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Videos"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="11d65" class="javax.swing.JTable" binding="vistas">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="220" height="70"/>
+          </grid>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <gridColor color="-16777216"/>
+        </properties>
+      </component>
+      <grid id="d9749" binding="loginPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-11482719"/>
+        </properties>
+        <border type="none" title="Login">
+          <title-color color="-16767668"/>
+        </border>
+        <children>
+          <component id="d36a3" class="javax.swing.JLabel" binding="emailLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="18" style="2"/>
+              <foreground color="-16777216"/>
+              <labelFor value="43ef2"/>
+              <text value="Email "/>
+            </properties>
+          </component>
+          <component id="b7429" class="javax.swing.JLabel" binding="passwdLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="18" style="2"/>
+              <foreground color="-16777216"/>
+              <labelFor value="9eb85"/>
+              <text value="Contraseña"/>
+            </properties>
+          </component>
+          <component id="9eb85" class="javax.swing.JPasswordField" binding="passwordField">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <selectionColor color="-1442561"/>
+            </properties>
+          </component>
+          <component id="43ef2" class="javax.swing.JFormattedTextField" binding="emailField">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <selectionColor color="-1442561"/>
+            </properties>
+          </component>
+          <component id="d1e03" class="javax.swing.JButton" binding="ingresarButton" default-binding="true">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Ingresar"/>
+            </properties>
+          </component>
+          <component id="82d27" class="javax.swing.JButton" binding="logoutBtn">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-393154"/>
+              <text value="Cerrar sesión y terminar"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="cb2ff" class="javax.swing.JLabel" binding="alertLabel">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <icon value="User.jpg"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <grid id="f32ef" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-16777216"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="7c9c3" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <font name="Arial Black" size="36" style="1"/>
+              <foreground color="-1"/>
+              <text value="VIDEOTECA"/>
+            </properties>
+          </component>
+          <component id="4888d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="Vids.jpg"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
