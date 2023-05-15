@@ -7,7 +7,7 @@ public class Main {
             mainFrame.setVisible(true);
             mainFrame.setSize(550,400);
             mainFrame.setLocation(450,150);
-            mainFrame.setDefaultCloseOperation (WindowConstants.EXIT_ON_CLOSE);
+            mainFrame.setDefaultCloseOperation (WindowConstants.EXIT_ON_CLOSE );
         });
     }
 }
