@@ -153,7 +153,7 @@ public class ConectorDB {
             int selectRow = updateVideoDTO.vidTable.getSelectedRow ();
             conectar ();
 
-            String updateQuery = "UPDATE videos SET category_id= "+ (updateVideoDTO.category.getSelectedIndex ()+1) +", name ='"
+            String updateQuery = "UPDATE videos SET category_id= "+ (updateVideoDTO.category.getSelectedIndex ()) +", name ='"
                     + updateVideoDTO.name.getText () +"', author= '"
                     + updateVideoDTO.author.getText ()+ "', description= '"+ updateVideoDTO.description.getText ()+"', file ='"
                     +updateVideoDTO.file.getText ()+"', image = '"+updateVideoDTO.image.getText ()+"', material = '"
