@@ -192,6 +192,8 @@ public class VideosUI extends JFrame {
                     alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 18));
                     alertLabel.setForeground (new Color (255, 0, 0));
                     alertLabel.setText ("EL NOMBRE Y AUTOR DEL VIDEO NO DEBEN ESTAR VACÍOS");
+                    nameField.setBackground (Color.RED);
+                    authField.setBackground (Color.RED);
                 } else {
                     ConectorDB.UpdateDTO updateVideoDTO = new ConectorDB.UpdateDTO (
                             vidTable,
@@ -210,6 +212,8 @@ public class VideosUI extends JFrame {
                     alertLabel.setForeground (new Color (36, 102, 75, 255));
                     alertLabel.setText ("VIDEO ACTUALIZADO CORRECTAMENTE");
                     dbConnect.showVideos (vidTable);
+                    nameField.setBackground (Color.WHITE);
+                    authField.setBackground (Color.WHITE);
                 }
             }
         };
