@@ -1,12 +1,16 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Stack;
 
 public class VideosUI extends JFrame {
     private JTextField nameField;
@@ -24,20 +28,74 @@ public class VideosUI extends JFrame {
     private JButton mostrarButton;
     private JLabel alertLabel;
     private JButton updVButton;
+    private JTable categoriesTable;
+    private JTextField fileField;
+    private JTextField imageField;
+    private JTextField materialField;
+    private JTextField createdField;
+    private JCheckBox recommendedCheck;
+    private JComboBox<Stack<Object>> categoriesCombo;
+    private JTextField visitsField;
     ConectorDB dbConnect = new ConectorDB ();
 
+
+    public void showCategoriesTable (JTable categoriesTable) {
+        String[] cols = {"ID", "CATEGORÍA", "TIPO", "DESCRIPCIÓN"};
+        DefaultTableModel model = new DefaultTableModel ();
+
+        model.addColumn ("id");
+        model.addColumn ("name");
+        model.addColumn ("type");
+        model.addColumn ("description");
+        categoriesTable.setModel (model);
+
+        try {
+            model.addRow (cols);
+            dbConnect.conectar ();
+            String showCatsQuery = "SELECT * FROM categories";
+            Object[] categoryRow = new Object[4];
+            PreparedStatement ps = dbConnect.dbConnect.prepareStatement (showCatsQuery);
+            ResultSet cats = ps.executeQuery ();
+            while (cats.next ()) {
+                categoryRow[0] = cats.getInt (1);
+                categoryRow[1] = cats.getString (2);
+                categoryRow[2] = cats.getString (3);
+                categoryRow[3] = cats.getString (4);
+                model.addRow (categoryRow);
+                vidTable.setModel (model);
+                try {
+                    Stack<Object> catElements = new Stack<> ();
+                    catElements.push (categoryRow[0]);
+                    categoriesCombo.addItem (catElements);
+                } catch (NullPointerException ex) {
+                    throw new RuntimeException (ex);
+                }
+            }
+        } catch (SQLException sqlEx) {
+            throw new RuntimeException (sqlEx);
+        }
+    }
+
     public void createVideo (){
+        String DATE_FORMAT = "YYYY-MM-dd hh:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat (DATE_FORMAT);
+
+        String category = categoriesCombo.getSelectedItem ().toString ();
         String videoName = nameField.getText ();
         String videoAuthor = authField.getText ();
         String description = descArea.getText ();
+        String file = fileField.getText ();
+        String image = imageField.getText ();
+        String material = materialField.getText ();
+        String fecha = dateFormat.format (new Date ());
+        String recommended = recommendedCheck.isSelected () ? "Sí": "No";
         try {
             dbConnect.conectar ();
-            String DATE_FORMAT = "YYYY-MM-dd hh:mm:ss";
-            SimpleDateFormat dateFormat = new SimpleDateFormat (DATE_FORMAT);
+
             String createVidQuery = "INSERT INTO videos (id, category_id, name, author, description," +
                     " file, image, material, number_visits, created_at, recommended)" +
                     " VALUES (default ,2 ,'" + videoName + "', '" + videoAuthor + "', '" + description +
-                    "', null, null, null, null, '" + dateFormat.format (new Date ()) + "', null)";
+                    "', null, null, null, null, '" + fecha + "', null)";
 
             Statement ps = dbConnect.dbConnect.createStatement ();
             ps.execute (createVidQuery);
@@ -63,11 +121,13 @@ public class VideosUI extends JFrame {
         }
     }
 
-
-
     VideosUI(){
         setContentPane(videoWindow);
         vidDescr.setEditable (false);
+        visitsField.setEnabled (false);
+        vidTable.setVisible (false);
+        showCategoriesTable (categoriesTable);
+        categoriesTable.setVisible (false);
         MouseAdapter onCancel = new MouseAdapter () {
             @Override
             public void mouseClicked (MouseEvent e) {
@@ -88,6 +148,8 @@ public class VideosUI extends JFrame {
             @Override
             public void mouseClicked (MouseEvent e) {
                 super.mouseClicked (e);
+                vidTable.setVisible (true);
+                categoriesTable.setVisible (true);
             dbConnect.showVideos (vidTable);
             }
         };
@@ -119,7 +181,19 @@ public class VideosUI extends JFrame {
                     alertLabel.setForeground (new Color (255, 0, 0));
                     alertLabel.setText ("EL NOMBRE Y AUTOR DEL VIDEO NO DEBEN ESTAR VACÍOS");
                 } else {
-                    dbConnect.updateVideo (vidTable, nameField, authField, descArea);
+                    ConectorDB.UpdateDTO updateVideoDTO = new ConectorDB.UpdateDTO (
+                            vidTable,
+                            nameField,
+                            categoriesCombo,
+                            authField,
+                            descArea,
+                            fileField,
+                            imageField,
+                            materialField,
+                            createdField,
+                            recommendedCheck
+                    );
+                    dbConnect.updateVideo (updateVideoDTO);
                     alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 18));
                     alertLabel.setForeground (new Color (36, 102, 75, 255));
                     alertLabel.setText ("VIDEO ACTUALIZADO CORRECTAMENTE");

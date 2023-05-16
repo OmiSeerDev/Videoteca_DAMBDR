@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Stack;
 
 public class ConectorDB {
     Connection dbConnect;
@@ -11,6 +12,41 @@ public class ConectorDB {
     static  ResultSet res;
     boolean isAdminLoggedIn;
     boolean userLoggedIn;
+    static class UpdateDTO {
+        JTable vidTable;
+        JTextField name;
+        JComboBox<Stack<Object>> category;
+        JTextField author;
+        JTextArea description;
+        JTextField file;
+        JTextField image;
+        JTextField material;
+        JTextField createdAt;
+        JCheckBox recommended;
+
+        public UpdateDTO (JTable vidTable,
+                          JTextField name,
+                          JComboBox<Stack<Object>> category,
+                          JTextField author,
+                          JTextArea description,
+                          JTextField file,
+                          JTextField image,
+                          JTextField material,
+                          JTextField createdAt,
+                          JCheckBox recommended
+        ) {
+            this.vidTable = vidTable;
+            this.name = name;
+            this.category = category;
+            this.author = author;
+            this.description = description;
+            this.file = file;
+            this.image = image;
+            this.material = material;
+            this.createdAt = createdAt;
+            this.recommended = recommended;
+        }
+    }
 
     public void conectar () {
         String DB_URL = "jdbc:mysql://127.0.0.1:3306/videoteca_omejia";
@@ -96,13 +132,19 @@ public class ConectorDB {
         }
     }
 
-    public void updateVideo (JTable vidTable, JTextField name, JTextField author, JTextArea description){
+    public void updateVideo ( UpdateDTO updateVideoDTO ){
         try {
-            int selectRow = vidTable.getSelectedRow ();
+            int selectRow = updateVideoDTO.vidTable.getSelectedRow ();
             conectar ();
-            String updateQuery = "UPDATE videos SET name ='"+ name.getText () +"', author= '"
-                    +author.getText ()+ "', description= '"+description.getText ()+"' WHERE id = '"
-                    + vidTable.getValueAt (selectRow,0)+"'";
+
+            String updateQuery = "UPDATE videos SET category_id= '"+updateVideoDTO.category+"', name ='"
+                    + updateVideoDTO.name.getText () +"', author= '"
+                    + updateVideoDTO.author.getText ()+ "', description= '"+ updateVideoDTO.description.getText ()+"', file ='"
+                    +updateVideoDTO.file.getText ()+"', image = '"+updateVideoDTO.image.getText ()+"', material = '"
+                    +updateVideoDTO.material.getText ()+"', number_visits = 0, createdAt = '"+updateVideoDTO.createdAt.getText ()+"', recommended = '"
+                    +updateVideoDTO.recommended+"' WHERE id = '"
+                    + updateVideoDTO.vidTable.getValueAt (selectRow,0)+"'";
+
             Statement update = dbConnect.createStatement ();
             update.execute (updateQuery);
         } catch (SQLException ex){

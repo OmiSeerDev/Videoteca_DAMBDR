@@ -27,6 +27,7 @@ public class Videoteca extends JFrame {
     VideosUI vidUI;
 
     Videoteca(){
+
         setContentPane (Layer);
         exitButton.setBackground (new Color (255,0,0));
         dbConnect = new ConectorDB ();
