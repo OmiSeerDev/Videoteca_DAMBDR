@@ -23,17 +23,18 @@ public class Videoteca extends JFrame {
     private JLabel emailLabel;
     private JLabel passwdLabel;
     private JLabel alertLabel;
+    private JLabel roleTbLabel;
     ConectorDB dbConnect;
     VideosUI vidUI;
 
     Videoteca(){
-
         setContentPane (Layer);
         exitButton.setBackground (new Color (255,0,0));
         dbConnect = new ConectorDB ();
         dbConnect.conectar ();
         loginPanel.setVisible (false);
         rolesButton.setVisible (false);
+        roleTbLabel.setVisible (false);
         alertLabel.setVisible (false);
         vistas.setVisible (false);
         categoriesButton.setVisible (false);
@@ -45,6 +46,7 @@ public class Videoteca extends JFrame {
             public void mouseClicked (MouseEvent e) {
                 super.mouseClicked (e);
                 vistas.setVisible (true);
+                roleTbLabel.setVisible (true);
 
                 String[] cols = {"ID", "NAME"};
                 DefaultTableModel model = new DefaultTableModel ();
@@ -123,6 +125,7 @@ public class Videoteca extends JFrame {
                 passwdLabel.setVisible (true);
 
                 rolesButton.setVisible (false);
+                roleTbLabel.setVisible (false);
                 loginButton.setVisible (true);
                 ingresarButton.setVisible (true);
                 logoutBtn.setVisible (false);
@@ -140,7 +143,8 @@ public class Videoteca extends JFrame {
                 super.mouseClicked (e);
             vidUI = new VideosUI ();
             vidUI.setVisible (true);
-            vidUI.setSize (1160, 860);
+            Dimension screen = Toolkit.getDefaultToolkit ().getScreenSize ();
+            vidUI.setSize (screen);
             vidUI.setLocationRelativeTo (null);
             }
         };

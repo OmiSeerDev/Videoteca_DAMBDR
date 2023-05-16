@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Stack;
 
 public class VideosUI extends JFrame {
     private JTextField nameField;
@@ -34,7 +33,7 @@ public class VideosUI extends JFrame {
     private JTextField materialField;
     private JTextField createdField;
     private JCheckBox recommendedCheck;
-    private JComboBox<Stack<Object>> categoriesCombo;
+    private JComboBox<Integer>categoriesCombo;
     private JTextField visitsField;
     ConectorDB dbConnect = new ConectorDB ();
 
@@ -64,9 +63,11 @@ public class VideosUI extends JFrame {
                 model.addRow (categoryRow);
                 vidTable.setModel (model);
                 try {
-                    Stack<Object> catElements = new Stack<> ();
-                    catElements.push (categoryRow[0]);
-                    categoriesCombo.addItem (catElements);
+                    Integer[] catElements = new Integer[1];
+                    for (int i = 0; i < catElements.length; i++) {
+                    catElements[i] = (Integer) categoryRow[0];
+                    categoriesCombo.addItem (catElements[i]);
+                    }
                 } catch (NullPointerException ex) {
                     throw new RuntimeException (ex);
                 }
@@ -88,14 +89,14 @@ public class VideosUI extends JFrame {
         String image = imageField.getText ();
         String material = materialField.getText ();
         String fecha = dateFormat.format (new Date ());
-        String recommended = recommendedCheck.isSelected () ? "Sí": "No";
+        String recommended = recommendedCheck.isSelected () ? "1" : "0";
         try {
             dbConnect.conectar ();
 
             String createVidQuery = "INSERT INTO videos (id, category_id, name, author, description," +
                     " file, image, material, number_visits, created_at, recommended)" +
-                    " VALUES (default ,2 ,'" + videoName + "', '" + videoAuthor + "', '" + description +
-                    "', null, null, null, null, '" + fecha + "', null)";
+                    " VALUES (default , "+category+" ,'" + videoName + "', '" + videoAuthor + "', '" + description +
+                    "', '" + file + "', '"+ image +"', '" + material+"', 0, '" + fecha + "', "+recommended+")";
 
             Statement ps = dbConnect.dbConnect.createStatement ();
             ps.execute (createVidQuery);
@@ -125,7 +126,13 @@ public class VideosUI extends JFrame {
         setContentPane(videoWindow);
         vidDescr.setEditable (false);
         visitsField.setEnabled (false);
+        createdField.setEnabled (false);
         vidTable.setVisible (false);
+
+        addVButton.setVisible (false);
+        delVButton.setVisible (false);
+        updVButton.setVisible (false);
+
         showCategoriesTable (categoriesTable);
         categoriesTable.setVisible (false);
         MouseAdapter onCancel = new MouseAdapter () {
@@ -144,13 +151,17 @@ public class VideosUI extends JFrame {
             }
         };
 
-        MouseAdapter onVideoClick = new MouseAdapter () {
+        MouseAdapter onShowClick = new MouseAdapter () {
             @Override
             public void mouseClicked (MouseEvent e) {
                 super.mouseClicked (e);
                 vidTable.setVisible (true);
+
                 categoriesTable.setVisible (true);
             dbConnect.showVideos (vidTable);
+                addVButton.setVisible (true);
+                delVButton.setVisible (true);
+                updVButton.setVisible (true);
             }
         };
 
@@ -168,6 +179,7 @@ public class VideosUI extends JFrame {
                     alertLabel.setForeground (new Color (36, 102, 75, 255));
                     alertLabel.setText ("VIDEO AGREGADO CORRECTAMENTE");
                     nameField.setText (""); authField.setText (""); descArea.setText ("");
+                    dbConnect.showVideos (vidTable);
                 }
             }
         };
@@ -197,6 +209,7 @@ public class VideosUI extends JFrame {
                     alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 18));
                     alertLabel.setForeground (new Color (36, 102, 75, 255));
                     alertLabel.setText ("VIDEO ACTUALIZADO CORRECTAMENTE");
+                    dbConnect.showVideos (vidTable);
                 }
             }
         };
@@ -209,13 +222,14 @@ public class VideosUI extends JFrame {
                 alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 18));
                 alertLabel.setForeground (new Color (8, 0, 223, 255));
                 alertLabel.setText ("VIDEO BORRADO CORRECTAMENTE");
+                dbConnect.showVideos (vidTable);
             }
         };
 
         addVButton.addMouseListener (onCreateVideo);
         delVButton.addMouseListener (onDeleteVideo);
         updVButton.addMouseListener(onUpdateVideo);
-        mostrarButton.addMouseListener (onVideoClick);
+        mostrarButton.addMouseListener (onShowClick);
         cancelButton.addMouseListener (onCancel);
         vidTable.addMouseListener (onSelectRow);
     }

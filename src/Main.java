@@ -5,7 +5,7 @@ public class Main {
         SwingUtilities.invokeLater (()-> {
             Videoteca mainFrame = new Videoteca ();
             mainFrame.setVisible(true);
-            mainFrame.setSize(550,400);
+            mainFrame.setSize(316,480);
             mainFrame.setLocation(450,150);
             mainFrame.setDefaultCloseOperation (WindowConstants.EXIT_ON_CLOSE );
         });
