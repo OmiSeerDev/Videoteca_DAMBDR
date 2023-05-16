@@ -176,7 +176,7 @@ public class VideosUI extends JFrame {
                     nameField.setBackground (Color.RED);
                     authField.setBackground (Color.RED);
                 } else {
-                    ConectorDB.UpdateDTO updateVideoDTO = new ConectorDB.UpdateDTO (
+                    VideosController.UpdateDTO updateVideoDTO = new VideosController.UpdateDTO (
                             vidTable,
                             nameField,
                             categoriesCombo,

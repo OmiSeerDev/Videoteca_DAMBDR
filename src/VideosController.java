@@ -9,6 +9,49 @@ import java.util.Date;
 import java.util.Objects;
 
 public class VideosController extends ConectorDB{
+
+    static class UpdateDTO {
+        String DATE_FORMAT = "YYYY-MM-dd hh:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat (DATE_FORMAT);
+
+        JTable vidTable;
+        JTextField name;
+        JComboBox<Integer> category;
+        JTextField author;
+        JTextArea description;
+        JTextField file;
+        JTextField image;
+        JTextField material;
+        JTextField createdAt;
+        JCheckBox recommend;
+        String recommended;
+
+        public UpdateDTO (JTable vidTable,
+                          JTextField name,
+                          JComboBox<Integer> category,
+                          JTextField author,
+                          JTextArea description,
+                          JTextField file,
+                          JTextField image,
+                          JTextField material,
+                          JTextField createdAt,
+                          JCheckBox recommend
+        ) {
+            this.vidTable = vidTable;
+            this.name = name;
+            this.category = category;
+            this.author = author;
+            this.description = description;
+            this.file = file;
+            this.image = image;
+            this.material = material;
+            this.createdAt = createdAt;
+            this.recommend = recommend;
+            this.recommended = recommend.isSelected () ? "1" : "0";
+            createdAt.setText (dateFormat.format (new Date ()));
+        }
+    }
+
     public static void createVideo (
             JComboBox<Integer> categoriesCombo,
             JTextField nameField,

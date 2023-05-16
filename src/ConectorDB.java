@@ -1,9 +1,6 @@
-import javax.swing.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Objects;
 
 public class ConectorDB {
@@ -12,47 +9,6 @@ public class ConectorDB {
     static  ResultSet res;
     boolean isAdminLoggedIn;
     boolean userLoggedIn;
-    static class UpdateDTO {
-        String DATE_FORMAT = "YYYY-MM-dd hh:mm:ss";
-        SimpleDateFormat dateFormat = new SimpleDateFormat (DATE_FORMAT);
-
-        JTable vidTable;
-        JTextField name;
-        JComboBox<Integer> category;
-        JTextField author;
-        JTextArea description;
-        JTextField file;
-        JTextField image;
-        JTextField material;
-        JTextField createdAt;
-        JCheckBox recommend;
-        String recommended;
-
-        public UpdateDTO (JTable vidTable,
-                          JTextField name,
-                          JComboBox<Integer> category,
-                          JTextField author,
-                          JTextArea description,
-                          JTextField file,
-                          JTextField image,
-                          JTextField material,
-                          JTextField createdAt,
-                          JCheckBox recommend
-        ) {
-            this.vidTable = vidTable;
-            this.name = name;
-            this.category = category;
-            this.author = author;
-            this.description = description;
-            this.file = file;
-            this.image = image;
-            this.material = material;
-            this.createdAt = createdAt;
-            this.recommend = recommend;
-            this.recommended = recommend.isSelected () ? "1" : "0";
-            createdAt.setText (dateFormat.format (new Date ()));
-        }
-    }
 
     public static void conectar () {
         String DB_URL = "jdbc:mysql://127.0.0.1:3306/videoteca_omejia";
