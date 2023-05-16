@@ -7,7 +7,7 @@ import java.sql.*;
 
 import static java.lang.System.exit;
 
-public class Videoteca extends JFrame {
+public class InitialUI extends JFrame {
     private JPanel Layer;
     private JButton loginButton;
     private JButton videosButton;
@@ -27,7 +27,7 @@ public class Videoteca extends JFrame {
     ConectorDB dbConnect;
     VideosUI vidUI;
 
-    Videoteca(){
+    InitialUI (){
         setContentPane (Layer);
         exitButton.setBackground (new Color (255,0,0));
         dbConnect = new ConectorDB ();
