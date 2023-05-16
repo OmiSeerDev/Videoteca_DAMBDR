@@ -38,7 +38,7 @@ public class Videoteca extends JFrame {
         alertLabel.setVisible (false);
         vistas.setVisible (false);
         categoriesButton.setVisible (false);
-        //videosButton.setVisible (false);   //// Remove comment!!!!!!!!!!!!
+        videosButton.setVisible (false);
         logoutBtn.setVisible (false);
 
         MouseAdapter onClickRole = new MouseAdapter () {
