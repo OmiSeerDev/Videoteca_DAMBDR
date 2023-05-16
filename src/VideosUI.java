@@ -6,9 +6,6 @@ import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 public class VideosUI extends JFrame {
@@ -35,7 +32,6 @@ public class VideosUI extends JFrame {
     private JCheckBox recommendedCheck;
     private JComboBox<Integer>categoriesCombo;
     private JTextField visitsField;
-    ConectorDB dbConnect = new ConectorDB ();
 
 
     public void showCategoriesTable (JTable categoriesTable) {
@@ -50,10 +46,10 @@ public class VideosUI extends JFrame {
 
         try {
             model.addRow (cols);
-            dbConnect.conectar ();
+            ConectorDB.conectar ();
             String showCatsQuery = "SELECT * FROM categories";
             Object[] categoryRow = new Object[4];
-            PreparedStatement ps = dbConnect.dbConnect.prepareStatement (showCatsQuery);
+            PreparedStatement ps = ConectorDB.dbConnect.prepareStatement (showCatsQuery);
             ResultSet cats = ps.executeQuery ();
             while (cats.next ()) {
                 categoryRow[0] = cats.getInt (1);
@@ -77,34 +73,6 @@ public class VideosUI extends JFrame {
         }
     }
 
-    public void createVideo (){
-        String DATE_FORMAT = "YYYY-MM-dd hh:mm:ss";
-        SimpleDateFormat dateFormat = new SimpleDateFormat (DATE_FORMAT);
-
-        String category = categoriesCombo.getSelectedItem ().toString ();
-        String videoName = nameField.getText ();
-        String videoAuthor = authField.getText ();
-        String description = descArea.getText ();
-        String file = fileField.getText ();
-        String image = imageField.getText ();
-        String material = materialField.getText ();
-        String fecha = dateFormat.format (new Date ());
-        String recommended = recommendedCheck.isSelected () ? "1" : "0";
-        try {
-            dbConnect.conectar ();
-
-            String createVidQuery = "INSERT INTO videos (id, category_id, name, author, description," +
-                    " file, image, material, number_visits, created_at, recommended)" +
-                    " VALUES (default , "+category+" ,'" + videoName + "', '" + videoAuthor + "', '" + description +
-                    "', '" + file + "', '"+ image +"', '" + material+"', 0, '" + fecha + "', "+recommended+")";
-
-            Statement ps = dbConnect.dbConnect.createStatement ();
-            ps.execute (createVidQuery);
-        }catch (SQLException e) {
-            throw new RuntimeException (e);
-        }
-
-    }
 
     public void selectVideo (JTable vidTable) {
         try {
@@ -158,7 +126,7 @@ public class VideosUI extends JFrame {
                 vidTable.setVisible (true);
 
                 categoriesTable.setVisible (true);
-            dbConnect.showVideos (vidTable);
+            VideosController.showVideos (vidTable);
                 addVButton.setVisible (true);
                 delVButton.setVisible (true);
                 updVButton.setVisible (true);
@@ -174,12 +142,25 @@ public class VideosUI extends JFrame {
                     alertLabel.setForeground (new Color (255,0,0));
                     alertLabel.setText ("EL NOMBRE Y AUTOR DEL VIDEO NO DEBEN ESTAR VACÍOS");
                 } else {
-                    createVideo ();
+                    VideosController.createVideo (
+                            categoriesCombo,
+                            nameField,
+                            authField,
+                            descArea,
+                            fileField,
+                            imageField,
+                            materialField,
+                            recommendedCheck
+                    );
                     alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 18));
                     alertLabel.setForeground (new Color (36, 102, 75, 255));
                     alertLabel.setText ("VIDEO AGREGADO CORRECTAMENTE");
+
                     nameField.setText (""); authField.setText (""); descArea.setText ("");
-                    dbConnect.showVideos (vidTable);
+                    fileField.setText (""); imageField.setText (""); materialField.setText ("");
+                    recommendedCheck.setSelected (false);
+
+                    VideosController.showVideos (vidTable);
                 }
             }
         };
@@ -207,13 +188,16 @@ public class VideosUI extends JFrame {
                             createdField,
                             recommendedCheck
                     );
-                    dbConnect.updateVideo (updateVideoDTO);
+                    VideosController.updateVideo (updateVideoDTO);
                     alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 18));
                     alertLabel.setForeground (new Color (36, 102, 75, 255));
                     alertLabel.setText ("VIDEO ACTUALIZADO CORRECTAMENTE");
-                    dbConnect.showVideos (vidTable);
+                    VideosController.showVideos (vidTable);
                     nameField.setBackground (Color.WHITE);
                     authField.setBackground (Color.WHITE);
+                    nameField.setText (""); authField.setText (""); descArea.setText ("");
+                    fileField.setText (""); imageField.setText (""); materialField.setText ("");
+                    recommendedCheck.setSelected (false);
                 }
             }
         };
@@ -222,11 +206,11 @@ public class VideosUI extends JFrame {
             @Override
             public void mouseClicked (MouseEvent e) {
                 super.mouseClicked (e);
-            dbConnect.deleteVideo(vidTable);
+            VideosController.deleteVideo(vidTable);
                 alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 18));
                 alertLabel.setForeground (new Color (8, 0, 223, 255));
                 alertLabel.setText ("VIDEO BORRADO CORRECTAMENTE");
-                dbConnect.showVideos (vidTable);
+                VideosController.showVideos (vidTable);
             }
         };
 

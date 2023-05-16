@@ -31,7 +31,7 @@ public class Videoteca extends JFrame {
         setContentPane (Layer);
         exitButton.setBackground (new Color (255,0,0));
         dbConnect = new ConectorDB ();
-        dbConnect.conectar ();
+        ConectorDB.conectar ();
         loginPanel.setVisible (false);
         rolesButton.setVisible (false);
         roleTbLabel.setVisible (false);
@@ -57,7 +57,7 @@ public class Videoteca extends JFrame {
                 model.addRow (cols);
                 Object[] obj = new Object[2];
                 try {
-                    PreparedStatement ps = dbConnect.dbConnect.prepareStatement ("SELECT * FROM roles");
+                    PreparedStatement ps = ConectorDB.dbConnect.prepareStatement ("SELECT * FROM roles");
                     ResultSet res = ps.executeQuery ();
                     while (res.next ()) {
                         obj[0] = res.getString (1);
@@ -133,7 +133,7 @@ public class Videoteca extends JFrame {
                 alertLabel.setText ("Sesión terminada");
                 alertLabel.setForeground (new Color (255, 255, 0));
                 alertLabel.setFont (new Font ("Arial Narrow", Font.BOLD, 14));
-                dispose ();
+                exit(-1);
             }
         };
 
