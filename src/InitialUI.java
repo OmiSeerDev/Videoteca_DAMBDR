@@ -77,14 +77,15 @@ public class InitialUI extends JFrame {
                 super.mouseClicked (e);
                 String userInput = emailField.getText ();
                 try {
-                    if (dbConnect.isAdminLogin (userInput)) {
+                    if (LoginController.isAdminLogin (userInput)) {
                         rolesButton.setVisible (true);
                     }
-                    if (dbConnect.loginQuery (userInput, passwordField.getText ())) {
+                    if (LoginController.loginQuery (userInput, passwordField.getText ())) {
                         logoutBtn.setVisible (true);
                         loginButton.setVisible (false);
                         ingresarButton.setVisible (false);
                         videosButton.setVisible (true);
+                        categoriesButton.setVisible (true);
 
                         emailField.setVisible (false);
                         emailLabel.setVisible (false);
